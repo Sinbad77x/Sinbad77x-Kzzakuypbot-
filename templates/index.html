@@ -3,121 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kzzakupbot Hub — Калькулятор импорта и себестоимости</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Kzzakupbot Hub — Экосистема закупок Казахстана</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="nav-links-top">
-                <a href="/" class="active-nav">Калькулятор</a>
-                <a href="/education">Обучение тендерам</a>
-            </div>
-            <h1>Kzzakupbot Hub</h1>
-            <p class="subtitle">Инструменты для поставщиков Казахстана</p>
-            <p class="description">Рассчитывайте себестоимость поставки. Оценивайте маржу. Переходите к закупочным площадкам из одного рабочего пространства.</p>
-        </header>
-
-        {% if error %}
-        <div class="alert alert-error">
-            ⚠️ {{ error }}
+    <header class="header">
+        <div class="container">
+            <h1>🇰🇿 Kzzakupbot Hub</h1>
+            <p>Централизованная экосистема для работы с тендерами, закупками и финансовыми инструментами Казахстана.</p>
         </div>
-        {% endif %}
+    </header>
 
-        <main class="grid-layout">
-            <section class="card calculator-card">
-                <h2>🧮 Калькулятор импорта и себестоимости</h2>
-                <form method="POST" action="/">
-                    <div class="form-group">
-                        <label for="quantity">Количество товара (шт):</label>
-                        <input type="number" id="quantity" name="quantity" value="{{ form_data.quantity or '100' }}" required min="1">
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="price">Цена за единицу (в валюте):</label>
-                            <input type="number" step="any" id="price" name="price" value="{{ form_data.price or '10' }}" required min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="currency">Валюта:</label>
-                            <select id="currency" name="currency">
-                                <option value="USD" {% if form_data.currency == 'USD' %}selected{% endif %}>USD ($)</option>
-                                <option value="EUR" {% if form_data.currency == 'EUR' %}selected{% endif %}>EUR (€)</option>
-                                <option value="RUB" {% if form_data.currency == 'RUB' %}selected{% endif %}>RUB (₽)</option>
-                                <option value="CNY" {% if form_data.currency == 'CNY' %}selected{% endif %}>CNY (¥)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exchange_rate">Курс валюты к KZT (ручной ввод):</label>
-                        <input type="number" step="any" id="exchange_rate" name="exchange_rate" value="{{ form_data.exchange_rate or '480' }}" required min="0.01">
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="delivery">Доставка партии (KZT):</label>
-                            <input type="number" step="any" id="delivery" name="delivery" value="{{ form_data.delivery or '50000' }}" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="customs_duty">Таможенная пошлина (%):</label>
-                            <input type="number" step="any" id="customs_duty" name="customs_duty" value="{{ form_data.customs_duty or '5' }}" min="0">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="broker">Брокерские услуги (KZT):</label>
-                            <input type="number" step="any" id="broker" name="broker" value="{{ form_data.broker or '30000' }}" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="documents">Документы/Сертификация (KZT):</label>
-                            <input type="number" step="any" id="documents" name="documents" value="{{ form_data.documents or '20000' }}" min="0">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="selling_price">Планируемая цена продажи за единицу (KZT):</label>
-                        <input type="number" step="any" id="selling_price" name="selling_price" value="{{ form_data.selling_price or '8500' }}" required min="0">
-                    </div>
-
-                    <button type="submit" class="btn-primary">Рассчитать сделку</button>
-                </form>
-            </section>
-
-            <div class="right-column">
-                <section class="card results-card">
-                    <h2>📊 Результаты расчёта</h2>
-                    <ul class="results-list">
-                        <li><span>Закупка (в тенге):</span> <strong>{{ results.purchase_kzt if results else '—' }}</strong></li>
-                        <li><span>Таможенная пошлина:</span> <strong>{{ results.duty_kzt if results else '—' }}</strong></li>
-                        <li><span>Условный импортный НДС (16%):</span> <strong>{{ results.vat_kzt if results else '—' }}</strong></li>
-                        <li><span>Себестоимость партии:</span> <strong>{{ results.total_cost_party if results else '—' }}</strong></li>
-                        <li><span>Себестоимость единицы:</span> <strong>{{ results.total_cost_unit if results else '—' }}</strong></li>
-                        <li><span>Выручка:</span> <strong>{{ results.revenue if results else '—' }}</strong></li>
-                        <li class="highlight"><span>Маржа до налогов:</span> <strong>{{ results.margin if results else '—' }}</strong></li>
-                    </ul>
-                </section>
-
-                <section class="card platforms-card">
-                    <h2>🔎 Навигатор закупочных площадок</h2>
-                    <ul class="platforms-list">
-                        <li><a href="https://goszakup.gov.kz/" target="_blank">Государственные закупки РК</a></li>
-                        <li><a href="https://procurement.gov.kz/ru" target="_blank">Единая платформа закупок</a></li>
-                        <li><a href="https://zakup.sk.kz/" target="_blank">Самрук-Қазына</a></li>
-                        <li><a href="https://sk-pharmacy.ecc.kz/ru" target="_blank">СК-Фармация</a></li>
-                        <li><a href="https://fms.ecc.kz/ru" target="_blank">Закупки медицинских услуг (ФСМС)</a></li>
-                        <li><a href="https://mitwork.kz/" target="_blank">MITWORK</a></li>
-                        <li><a href="https://caspytender.kz/" target="_blank">Caspytender</a></li>
-                    </ul>
-                </section>
+    <main class="main-content container">
+        <!-- Блок поиска и навигации -->
+        <section id="tenders" class="section">
+            <h2>🔍 Поиск лотов и площадки РК</h2>
+            <div class="nav-links">
+                <a href="https://goszakup.gov.kz" target="_blank">Госзакупки РК</a>
+                <a href="https://zakup.sk.kz" target="_blank">Самрук-Казына</a>
+                <a href="https://skmed.ecc.kz" target="_blank">СК-Фармация</a>
+                <a href="https://eep.mitwork.kz" target="_blank">Mitwork</a>
+                <a href="https://fms.ecc.kz" target="_blank">ФСМС</a>
             </div>
-        </main>
+        </section>
 
-        <footer>
-            <p><strong>Важно:</strong> результаты калькулятора являются предварительными расчётами, а не гарантией прибыли или заменой профессиональной налоговой и таможенной консультации. Валютный курс вводится пользователем вручную. Каталог ссылок не означает наличия встроенного автоматического поиска тендеров.</p>
-            <p>&copy; 2026 Kzzakupbot Hub. Практические инструменты для принятия решений в закупках и поставках.</p>
-        </footer>
-    </div>
+        <!-- БЛОК: Банковские услуги и тендерные гарантии -->
+        <section id="banks" class="banks-section">
+            <div class="section-header">
+                <h3 class="section-title">🏦 Банковские услуги и тендерные гарантии РК</h3>
+                <p class="section-subtitle">Оформление бланковых гарантий, открытие спецсчетов и расчетно-кассовое обслуживание</p>
+            </div>
+
+            <div class="banks-grid">
+                <!-- Kaspi Business -->
+                <div class="bank-card" data-bank="kaspi">
+                    <div class="bank-card-header">
+                        <div class="bank-title-wrap">
+                            <span class="bank-icon">🟡</span>
+                            <h4 class="bank-name">Kaspi Business</h4>
+                        </div>
+                        <span class="bank-badge fast">Онлайн 5 мин</span>
+                    </div>
+                    <p class="bank-desc">Быстрый онлайн-выпуск бланковых и обеспеченных гарантий прямо в приложении Kaspi Pay.</p>
+                    <ul class="bank-details">
+                        <li><strong>Лимит гарантий:</strong> до 50 млн ₸ (ИП) / до 100 млн ₸ (ТОО)</li>
+                        <li><strong>Комиссия:</strong> от 1.5% до 3% (мин. 10 000 ₸)</li>
+                        <li><strong>Совместимость:</strong> Госзакупки РК, Самрук-Казына, E-Zhetysu</li>
+                    </ul>
+                    <a href="https://kaspi.kz/business" target="_blank" rel="noopener" class="bank-btn kaspi-btn">В Kaspi Business</a>
+                </div>
+
+                <!-- Halyk Bank -->
+                <div class="bank-card" data-bank="halyk">
+                    <div class="bank-card-header">
+                        <div class="bank-title-wrap">
+                            <span class="bank-icon">🟢</span>
+                            <h4 class="bank-name">Halyk Bank (Бизнес)</h4>
+                        </div>
+                        <span class="bank-badge leader">Крупные лимиты</span>
+                    </div>
+                    <p class="bank-desc">Цифровые тендерные гарантии Tender Pro в Onlinebank для участия в крупнобюджетных закупках.</p>
+                    <ul class="bank-details">
+                        <li><strong>Лимит гарантий:</strong> бланковые до 200 млн ₸ (до 100 млн ₸/лот)</li>
+                        <li><strong>Комиссия:</strong> 1% – 2% (с НДС) в пакетах Tender / Tender Pro</li>
+                        <li><strong>Доп. услуги:</strong> Валютные контракты, тендерные спецсчета 24/7</li>
+                    </ul>
+                    <a href="https://halykbank.kz" target="_blank" rel="noopener" class="bank-btn halyk-btn">В Halyk Onlinebank</a>
+                </div>
+
+                <!-- Банк ЦентрКредит (БЦК) -->
+                <div class="bank-card" data-bank="bcc">
+                    <div class="bank-card-header">
+                        <div class="bank-title-wrap">
+                            <span class="bank-icon">🔵</span>
+                            <h4 class="bank-name">Банк ЦентрКредит (БЦК)</h4>
+                        </div>
+                        <span class="bank-badge flexible">Без залога</span>
+                    </div>
+                    <p class="bank-desc">Беззалоговые лимиты под обороты сторонних банков и спецпакеты «Оптимальный+» / «Премиум».</p>
+                    <ul class="bank-details">
+                        <li><strong>Лимит гарантий:</strong> беззалоговые до 350 млн ₸ через BCC Business</li>
+                        <li><strong>Комиссия:</strong> от 1.7% (спецусловия при тендерной опции)</li>
+                        <li><strong>Скорость:</strong> решение и одобрение за 10 минут</li>
+                    </ul>
+                    <a href="https://bcc.kz" target="_blank" rel="noopener" class="bank-btn bcc-btn">В BCC Business</a>
+                </div>
+
+                <!-- Банк Туран (Историческая справка / Преемственность) -->
+                <div class="bank-card bank-turan" data-bank="turan">
+                    <div class="bank-card-header">
+                        <div class="bank-title-wrap">
+                            <span class="bank-icon">🏛️</span>
+                            <h4 class="bank-name">Банк ТуранКредит</h4>
+                        </div>
+                        <span class="bank-badge info">Преемственность</span>
+                    </div>
+                    <p class="bank-desc">Исторический банковый институт РК. Активы и корпоративный портфель интегрированы в Halyk Bank.</p>
+                    <ul class="bank-details">
+                        <li><strong>Текущий статус:</strong> Объединен в структуре Halyk Bank</li>
+                        <li><strong>Рекомендация:</strong> Для гарантий используйте Halyk Bank или БЦК</li>
+                    </ul>
+                    <a href="https://halykbank.kz" target="_blank" rel="noopener" class="bank-btn outline-btn">Перейти в Halyk Bank</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kzzakupbot Hub. Все права защищены.</p>
+        </div>
+    </footer>
 </body>
 </html>
