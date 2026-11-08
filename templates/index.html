@@ -7,17 +7,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <!-- Единое адаптивное меню -->
     <header class="header">
-        <div class="container">
+        <div class="container header-container">
             <h1>🇰🇿 Kzzakupbot Hub</h1>
+            <nav class="nav-menu">
+                <a href="#tenders">Закупки</a>
+                <a href="#calculator">Калькулятор</a>
+                <a href="#banks">Банки и гарантии</a>
+                <a href="#academy">Академия</a>
+                <a href="#cabinet">Фин. кабинет</a>
+            </nav>
+        </div>
+        <div class="container header-subtitle-wrap">
             <p>Централизованная экосистема для работы с тендерами, закупками и финансовыми инструментами Казахстана.</p>
         </div>
     </header>
 
     <main class="main-content container">
-        <!-- Блок поиска и навигации по площадкам -->
+        <!-- Раздел 1. Поиск лотов и официальные площадки РК -->
         <section id="tenders" class="section">
             <h2>🔍 Поиск лотов и официальные площадки РК</h2>
+            <p class="section-desc">Навигация по официальным государственным и корпоративным порталам закупщиков Казахстана:</p>
             <div class="nav-links">
                 <a href="https://goszakup.gov.kz" target="_blank" rel="noopener">Госзакупки РК</a>
                 <a href="https://zakup.sk.kz" target="_blank" rel="noopener">Самрук-Казына</a>
@@ -27,7 +38,83 @@
             </div>
         </section>
 
-        <!-- БЛОК: Банковские услуги и тендерные гарантии -->
+        <!-- Раздел 2. Тендерный калькулятор -->
+        <section id="calculator" class="section calculator-section">
+            <h2>🧮 Профессиональный тендерный калькулятор</h2>
+            <p class="section-desc">Расчёт себестоимости, маржи, налогов (НДС, СНР, КПН/ИПН), обеспечений и комиссий банков.</p>
+            
+            <div class="calc-container">
+                <div class="calc-form">
+                    <div class="form-group">
+                        <label for="costPrice">Себестоимость товара/услуги (₸):</label>
+                        <input type="number" id="costPrice" value="1000000" min="0" step="1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="markupPercent">Желаемая наценка (%):</label>
+                        <input type="number" id="markupPercent" value="25" min="0" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="taxSystem">Налоговый режим:</label>
+                        <select id="taxSystem">
+                            <option value="nds">Общий (с НДС 12%)</option>
+                            <option value="snr_ip" selected>СНР (Упрощенка 3%)</option>
+                            <option value="without_nds">Без НДС / Общеустановленный</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bidSecurityPercent">Обеспечение заявки (%):</label>
+                        <input type="number" id="bidSecurityPercent" value="1" min="0" max="5" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="contractSecurityPercent">Обеспечение исполнения договора (%):</label>
+                        <input type="number" id="contractSecurityPercent" value="3" min="0" max="20" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="bankCommissionPercent">Комиссия банка за гарантию (%):</label>
+                        <input type="number" id="bankCommissionPercent" value="2" min="0" step="0.1">
+                    </div>
+                    <button type="button" id="calculateBtn" class="calc-btn">Рассчитать сделку</button>
+                </div>
+
+                <div class="calc-results" id="calcResults">
+                    <h3>Результаты расчёта</h3>
+                    <div class="result-item">
+                        <span>Цена предложения (с наценкой):</span>
+                        <strong id="resOfferPrice">0 ₸</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Сумма налога / НДС:</span>
+                        <strong id="resTaxAmount">0 ₸</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Валовая прибыль:</span>
+                        <strong id="resGrossProfit">0 ₸</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Чистая прибыль (после налогов и комиссий):</span>
+                        <strong id="resNetProfit" class="highlight-profit">0 ₸</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Итоговая маржа:</span>
+                        <strong id="resMargin">0%</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Обеспечение заявки:</span>
+                        <strong id="resBidSecurity">0 ₸</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Обеспечение договора:</span>
+                        <strong id="resContractSecurity">0 ₸</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Комиссия банка за гарантии:</span>
+                        <strong id="resBankCommission">0 ₸</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел 3. Банковские услуги и тендерные гарантии РК -->
         <section id="banks" class="banks-section">
             <div class="section-header">
                 <h3 class="section-title">🏦 Банковские услуги и тендерные гарантии РК</h3>
@@ -90,8 +177,65 @@
                 </div>
             </div>
         </section>
+
+        <!-- Раздел 4. Академия поставщика -->
+        <section id="academy" class="section academy-section">
+            <h2>🎓 Бесплатная академия поставщика</h2>
+            <p class="section-desc">Информационные материалы и проверенные образовательные ресурсы для участников закупок:</p>
+            
+            <div class="academy-grid">
+                <div class="academy-card">
+                    <h4>1. Основы госзакупок РК</h4>
+                    <p>Базовые принципы законодательства, правила участия и терминология.</p>
+                </div>
+                <div class="academy-card">
+                    <h4>2. Закупки Самрук-Казына</h4>
+                    <p>Правила холдинга и предварительный квалификационный отбор (ПКО).</p>
+                </div>
+                <div class="academy-card">
+                    <h4>3. Подготовка и подача заявок</h4>
+                    <p>Защита от отклонений по формальным признакам и типичные ошибки.</p>
+                </div>
+                <div class="academy-card">
+                    <h4>4. Банковские гарантии</h4>
+                    <p>Порядок оформления обеспечений и предотвращение кассовых разрывов.</p>
+                </div>
+                <div class="academy-card">
+                    <h4>5. Налоги и финансовая грамотность</h4>
+                    <p>Особенности налогообложения поставщиков (НДС, СНР, КПН/ИПН).</p>
+                </div>
+                <div class="academy-card">
+                    <h4>6. Исполнение договора и логистика</h4>
+                    <p>Управление контрактом, акты выполненных работ и логистические риски.</p>
+                </div>
+            </div>
+
+            <div class="academy-links">
+                <h3>Проверенные внешние ресурсы:</h3>
+                <div class="nav-links">
+                    <a href="https://skills.enbek.kz" target="_blank" rel="noopener">Skills Enbek</a>
+                    <a href="https://atameken.kz" target="_blank" rel="noopener">НПП РК «Атамекен»</a>
+                    <a href="https://sk.kz" target="_blank" rel="noopener">Самрук-Казына</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел 5. Финансовый кабинет (В разработке) -->
+        <section id="cabinet" class="section cabinet-section">
+            <h2>💼 Финансовый кабинет поставщика (В разработке)</h2>
+            <p class="section-desc">Модуль комплексного аналитического планирования тендерных сделок. Функционал находится на этапе проектирования:</p>
+            
+            <div class="cabinet-features">
+                <div class="feature-badge">Расчёт кассового разрыва</div>
+                <div class="feature-badge">Оценка потребности в оборотном капитале</div>
+                <div class="feature-badge">Оценка стоимости финансирования</div>
+                <div class="feature-badge">Финансовое планирование сделки</div>
+            </div>
+            <p class="cabinet-note">Персональные кабинеты и сохранение расчётов в будущих версиях не задействованы.</p>
+        </section>
     </main>
 
+    <!-- Раздел 3 (Правовой дисклеймер) -->
     <footer class="footer">
         <div class="container">
             <div class="legal-disclaimer">
@@ -100,5 +244,9 @@
             <p>&copy; 2026 Kzzakupbot Hub. Все права защищены.</p>
         </div>
     </footer>
+
+    <!-- Подключение скриптов калькулятора -->
+    <script src="{{ url_for('static', filename='calculator.js') }}"></script>
+    <script src="{{ url_for('static', filename='calculator-ui.js') }}"></script>
 </body>
 </html>
