@@ -1,82 +1,52 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('calculator-form');
-    if (!form) return;
+/**
+ * Kzzakupbot Hub - Calculator UI Controller
+ */
 
-    const fields = [
-        'quantity', 'price', 'rate', 'intShipping', 
-        'localShipping', 'dutyRate', 'customsFees', 
-        'broker', 'docs', 'sellingPrice'
-    ];
+document.addEventListener('DOMContentLoaded', function () {
+    const calculateBtn = document.getElementById('calculateBtn');
+    if (!calculateBtn) return;
 
-    function updateUI() {
-        const inputs = {};
-        let hasError = false;
-
-        fields.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                const val = el.value.trim();
-                const numVal = Number(val);
-                
-                if (el.hasAttribute('required') && (val === '' || isNaN(numVal) || numVal < 0 || (id === 'rate' && numVal <= 0))) {
-                    el.classList.add('is-invalid');
-                    hasError = true;
-                } else {
-                    el.classList.remove('is-invalid');
-                }
-                inputs[id] = val;
-            }
-        });
-
-        const errorBanner = document.getElementById('calc-error-banner');
-        if (hasError) {
-            if (errorBanner) errorBanner.style.display = 'block';
-            clearResultsDisplay();
-            return;
-        } else {
-            if (errorBanner) errorBanner.style.display = 'none';
-        }
-
-        const result = calculateParty(inputs);
-        if (!result.valid) {
-            if (errorBanner) errorBanner.style.display = 'block';
-            clearResultsDisplay();
-            return;
-        }
-
-        renderResults(result);
+    function formatMoney(amount) {
+        return new Intl.NumberFormat('ru-RU').format(amount) + ' ₸';
     }
 
-    fields.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.addEventListener('input', updateUI);
-            el.addEventListener('change', updateUI);
+    function performCalculation() {
+        const costPrice = document.getElementById('costPrice').value;
+        const markupPercent = document.getElementById('markupPercent').value;
+        const taxSystem = document.getElementById('taxSystem').value;
+        const bidSecurityPercent = document.getElementById('bidSecurityPercent').value;
+        const contractSecurityPercent = document.getElementById('contractSecurityPercent').value;
+        const bankCommissionPercent = document.getElementById('bankCommissionPercent').value;
+
+        const inputData = {
+            costPrice,
+            markupPercent,
+            taxSystem,
+            bidSecurityPercent,
+            contractSecurityPercent,
+            bankCommissionPercent
+        };
+
+        if (typeof calculateTender === 'function') {
+            const results = calculateTender(inputData);
+
+            document.getElementById('resOfferPrice').textContent = formatMoney(results.offerPrice);
+            document.getElementById('resTaxAmount').textContent = formatMoney(results.taxAmount);
+            document.getElementById('resGrossProfit').textContent = formatMoney(results.grossProfit);
+            document.getElementById('resNetProfit').textContent = formatMoney(results.netProfit);
+            document.getElementById('resMargin').textContent = results.margin.toFixed(2) + '%';
+            document.getElementById('resBidSecurity').textContent = formatMoney(results.bidSecurity);
+            document.getElementById('resContractSecurity').textContent = formatMoney(results.contractSecurity);
+            document.getElementById('resBankCommission').textContent = formatMoney(results.bankCommission);
         }
+    }
+
+    calculateBtn.addEventListener('click', performCalculation);
+    
+    const inputs = document.querySelectorAll('.calc-form input, .calc-form select');
+    inputs.forEach(input => {
+        input.addEventListener('input', performCalculation);
     });
 
-    const currencySelect = document.getElementById('currency');
-    if (currencySelect) currencySelect.addEventListener('change', updateUI);
-
-    const regionSelect = document.getElementById('region');
-    if (regionSelect) regionSelect.addEventListener('change', updateUI);
-
-    updateUI();
+    performCalculation();
 });
-
-function clearResultsDisplay() {
-    ['res-purchase', 'res-duty', 'res-vat', 'res-total', 'res-unit', 'res-revenue', 'res-margin'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = '—';
-    });
-}
-
-function renderResults(res) {
-    document.getElementById('res-purchase').textContent = res.purchaseBaseKZT.toLocaleString('ru-RU') + ' ₸';
-    document.getElementById('res-duty').textContent = res.duty.toLocaleString('ru-RU') + ' ₸';
-    document.getElementById('res-vat').textContent = res.vat.toLocaleString('ru-RU') + ' ₸';
-    document.getElementById('res-total').textContent = res.totalCost.toLocaleString('ru-RU') + ' ₸';
-    document.getElementById('res-unit').textContent = res.unitCost.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ₸';
-    document.getElementById('res-revenue').textContent = res.revenue.toLocaleString('ru-RU') + ' ₸';
-    document.getElementById('res-margin').textContent = res.marginBeforeTax.toLocaleString('ru-RU') + ' ₸';
-}
