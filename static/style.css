@@ -139,7 +139,6 @@ body {
 .bank-badge.fast { background: #fef3c7; color: #d97706; }
 .bank-badge.leader { background: #dcfce7; color: #15803d; }
 .bank-badge.flexible { background: #dbeafe; color: #1d4ed8; }
-.bank-badge.info { background: #f1f5f9; color: #475569; }
 
 .bank-desc {
   font-size: 0.9rem;
@@ -176,22 +175,21 @@ body {
   background-color: #1d4ed8;
 }
 
-.bank-btn.outline-btn {
-  background-color: transparent;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-}
-
-.bank-btn.outline-btn:hover {
-  background-color: #f1f5f9;
-}
-
 .footer {
   background: #ffffff;
   border-top: 1px solid #e2e8f0;
   text-align: center;
-  padding: 20px 0;
+  padding: 25px 0;
   color: #64748b;
   font-size: 0.9rem;
   margin-top: 40px;
-  }
+}
+
+.legal-disclaimer {
+  max-width: 800px;
+  margin: 0 auto 15px auto;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  padding: 0 15px;
+}
