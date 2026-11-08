@@ -25,32 +25,32 @@
     </header>
 
     <main class="main-content container">
-        <!-- Раздел 1. Поиск лотов и официальные площадки РК -->
+        <!-- 1. Закупки -->
         <section id="tenders" class="section">
-            <h2>🔍 Поиск лотов и официальные площадки РК</h2>
-            <p class="section-desc">Навигация по официальным государственным и корпоративным порталам закупщиков Казахстана:</p>
+            <h2>Поиск лотов и официальные площадки РК</h2>
+            <p class="section-desc">Навигация по официальным государственным и корпоративным порталам закупщиков Казахстана</p>
             <div class="nav-links">
-                <a href="https://goszakup.gov.kz" target="_blank" rel="noopener">Госзакупки РК</a>
-                <a href="https://zakup.sk.kz" target="_blank" rel="noopener">Самрук-Казына</a>
-                <a href="https://skmed.ecc.kz" target="_blank" rel="noopener">СК-Фармация</a>
-                <a href="https://eep.mitwork.kz" target="_blank" rel="noopener">Mitwork</a>
-                <a href="https://fms.ecc.kz" target="_blank" rel="noopener">ФСМС</a>
+                <a href="https://goszakup.gov.kz" target="_blank" rel="noopener">Госзакупки РК — https://goszakup.gov.kz/</a>
+                <a href="https://zakup.sk.kz" target="_blank" rel="noopener">Самрук-Казына — https://zakup.sk.kz/</a>
+                <a href="https://skmed.ecc.kz" target="_blank" rel="noopener">СК-Фармация — https://skmed.ecc.kz/</a>
+                <a href="https://eep.mitwork.kz" target="_blank" rel="noopener">Mitwork — https://eep.mitwork.kz/</a>
+                <a href="https://fms.ecc.kz" target="_blank" rel="noopener">ФСМС — https://fms.ecc.kz/</a>
             </div>
         </section>
 
-        <!-- Раздел 2. Тендерный калькулятор -->
+        <!-- 2. Калькулятор -->
         <section id="calculator" class="section calculator-section">
-            <h2>🧮 Профессиональный тендерный калькулятор</h2>
+            <h2>Тендерный калькулятор</h2>
             <p class="section-desc">Расчёт себестоимости, маржи, налогов (НДС, СНР, КПН/ИПН), обеспечений и комиссий банков.</p>
             
             <div class="calc-container">
                 <div class="calc-form">
                     <div class="form-group">
-                        <label for="costPrice">Себестоимость товара/услуги (₸):</label>
+                        <label for="costPrice">Себестоимость товара/услуги:</label>
                         <input type="number" id="costPrice" value="1000000" min="0" step="1000">
                     </div>
                     <div class="form-group">
-                        <label for="markupPercent">Желаемая наценка (%):</label>
+                        <label for="markupPercent">Желаемая наценка:</label>
                         <input type="number" id="markupPercent" value="25" min="0" step="0.5">
                     </div>
                     <div class="form-group">
@@ -62,15 +62,15 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="bidSecurityPercent">Обеспечение заявки (%):</label>
+                        <label for="bidSecurityPercent">Обеспечение заявки:</label>
                         <input type="number" id="bidSecurityPercent" value="1" min="0" max="5" step="0.1">
                     </div>
                     <div class="form-group">
-                        <label for="contractSecurityPercent">Обеспечение исполнения договора (%):</label>
+                        <label for="contractSecurityPercent">Обеспечение исполнения договора:</label>
                         <input type="number" id="contractSecurityPercent" value="3" min="0" max="20" step="0.5">
                     </div>
                     <div class="form-group">
-                        <label for="bankCommissionPercent">Комиссия банка за гарантию (%):</label>
+                        <label for="bankCommissionPercent">Комиссия банка за гарантию:</label>
                         <input type="number" id="bankCommissionPercent" value="2" min="0" step="0.1">
                     </div>
                     <button type="button" id="calculateBtn" class="calc-btn">Рассчитать сделку</button>
@@ -79,7 +79,7 @@
                 <div class="calc-results" id="calcResults">
                     <h3>Результаты расчёта</h3>
                     <div class="result-item">
-                        <span>Цена предложения (с наценкой):</span>
+                        <span>Цена предложения:</span>
                         <strong id="resOfferPrice">0 ₸</strong>
                     </div>
                     <div class="result-item">
@@ -91,7 +91,7 @@
                         <strong id="resGrossProfit">0 ₸</strong>
                     </div>
                     <div class="result-item">
-                        <span>Чистая прибыль (после налогов и комиссий):</span>
+                        <span>Чистая прибыль после налогов и комиссий:</span>
                         <strong id="resNetProfit" class="highlight-profit">0 ₸</strong>
                     </div>
                     <div class="result-item">
@@ -114,10 +114,10 @@
             </div>
         </section>
 
-        <!-- Раздел 3. Банковские услуги и тендерные гарантии РК -->
+        <!-- 3. Банки и гарантии -->
         <section id="banks" class="banks-section">
             <div class="section-header">
-                <h3 class="section-title">🏦 Банковские услуги и тендерные гарантии РК</h3>
+                <h3 class="section-title">Банки и гарантии</h3>
                 <p class="section-subtitle">Оформление бланковых гарантий, открытие спецсчетов и расчетно-кассовое обслуживание</p>
             </div>
 
@@ -133,11 +133,11 @@
                     </div>
                     <p class="bank-desc">Экспресс-выпуск бланковых и обеспеченных гарантий в приложении Kaspi Pay.</p>
                     <ul class="bank-details">
-                        <li><strong>Лимит гарантий:</strong> до 50 млн ₸ (ИП) / до 100 млн ₸ (ТОО)</li>
-                        <li><strong>Комиссия:</strong> от 1.5% до 3% (мин. 10 000 ₸)</li>
+                        <li><strong>Лимит:</strong> до 50 млн ₸ (ИП) / до 100 млн ₸ (ТОО)</li>
+                        <li><strong>Комиссия:</strong> от 1,5% до 3% (мин. 10 000 ₸)</li>
                         <li><strong>Совместимость:</strong> Госзакупки РК, Самрук-Казына</li>
                     </ul>
-                    <a href="https://kaspi.kz/business" target="_blank" rel="noopener" class="bank-btn kaspi-btn">В Kaspi Business</a>
+                    <a href="https://kaspi.kz/business" target="_blank" rel="noopener" class="bank-btn kaspi-btn">Ссылка</a>
                 </div>
 
                 <!-- Halyk Bank -->
@@ -151,11 +151,11 @@
                     </div>
                     <p class="bank-desc">Цифровые тендерные гарантии Tender Pro в системе Halyk Onlinebank.</p>
                     <ul class="bank-details">
-                        <li><strong>Лимит гарантий:</strong> бланковые до 200 млн ₸ (до 100 млн ₸/лот)</li>
-                        <li><strong>Комиссия:</strong> 1% – 2% (с НДС) по пакетам Tender / Tender Pro</li>
-                        <li><strong>Доп. услуги:</strong> Валютные контракты, тендерные спецсчета 24/7</li>
+                        <li><strong>Бланковые гарантии:</strong> до 200 млн ₸ (до 100 млн ₸/лот)</li>
+                        <li><strong>Комиссия:</strong> 1–2% с НДС по пакетам Tender / Tender Pro</li>
+                        <li><strong>Дополнительные услуги:</strong> валютные контракты, тендерные спецсчета 24/7</li>
                     </ul>
-                    <a href="https://halykbank.kz" target="_blank" rel="noopener" class="bank-btn halyk-btn">В Halyk Onlinebank</a>
+                    <a href="https://halykbank.kz/" target="_blank" rel="noopener" class="bank-btn halyk-btn">Ссылка</a>
                 </div>
 
                 <!-- Банк ЦентрКредит (БЦК) -->
@@ -169,19 +169,19 @@
                     </div>
                     <p class="bank-desc">Беззалоговые лимиты под обороты сторонних банков через BCC Business.</p>
                     <ul class="bank-details">
-                        <li><strong>Лимит гарантий:</strong> беззалоговые до 350 млн ₸</li>
-                        <li><strong>Комиссия:</strong> от 1.7% (спецусловия при тендерной опции)</li>
+                        <li><strong>Лимит:</strong> беззалоговые гарантии до 350 млн ₸</li>
+                        <li><strong>Комиссия:</strong> от 1,7% (спецусловия при тендерной опции)</li>
                         <li><strong>Скорость:</strong> решение и одобрение за 10 минут</li>
                     </ul>
-                    <a href="https://bcc.kz" target="_blank" rel="noopener" class="bank-btn bcc-btn">В BCC Business</a>
+                    <a href="https://bcc.kz/" target="_blank" rel="noopener" class="bank-btn bcc-btn">Ссылка</a>
                 </div>
             </div>
         </section>
 
-        <!-- Раздел 4. Академия поставщика -->
+        <!-- 4. Академия -->
         <section id="academy" class="section academy-section">
-            <h2>🎓 Бесплатная академия поставщика</h2>
-            <p class="section-desc">Информационные материалы и проверенные образовательные ресурсы для участников закупок:</p>
+            <h2>Бесплатная академия поставщика</h2>
+            <p class="section-desc">Информационные материалы и проверенные образовательные ресурсы для участников закупок</p>
             
             <div class="academy-grid">
                 <div class="academy-card">
@@ -211,7 +211,7 @@
             </div>
 
             <div class="academy-links">
-                <h3>Проверенные внешние ресурсы:</h3>
+                <h3>Внешние ресурсы:</h3>
                 <div class="nav-links">
                     <a href="https://skills.enbek.kz" target="_blank" rel="noopener">Skills Enbek</a>
                     <a href="https://atameken.kz" target="_blank" rel="noopener">НПП РК «Атамекен»</a>
@@ -220,9 +220,9 @@
             </div>
         </section>
 
-        <!-- Раздел 5. Фин. кабинет (В разработке) -->
+        <!-- 5. Фин. кабинет -->
         <section id="cabinet" class="section cabinet-section">
-            <h2>💼 Фин. кабинет поставщика (В разработке)</h2>
+            <h2>Фин. кабинет поставщика (В разработке)</h2>
             <p class="section-desc">Модуль комплексного аналитического планирования тендерных сделок. Функционал находится на этапе проектирования:</p>
             
             <div class="cabinet-features">
@@ -235,7 +235,7 @@
         </section>
     </main>
 
-    <!-- Правовой дисклеймер -->
+    <!-- Дисклеймер и футер -->
     <footer class="footer">
         <div class="container">
             <div class="legal-disclaimer">
