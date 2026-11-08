@@ -1,45 +1,38 @@
-const test = require('node:test');
-const assert = require('node:assert');
-const { calculateParty } = require('./calculator.js');
+/**
+ * Kzzakupbot Hub - Calculator Unit Tests
+ */
 
-test('Control Scenario Calculation', () => {
-    const inputs = {
-        quantity: 100,
-        price: 10,
-        rate: 480,
-        intShipping: 18000,
-        localShipping: 5000,
-        dutyRate: 10,
-        customsFees: 20000,
-        broker: 15000,
-        docs: 10000,
-        sellingPrice: 8500
+const { calculateTender } = require('./calculator.js');
+
+function runTests() {
+    console.log('Running Kzzakupbot Calculator Tests...');
+
+    const testInput = {
+        costPrice: 1000000,
+        markupPercent: 20,
+        taxSystem: 'snr_ip',
+        bidSecurityPercent: 1,
+        contractSecurityPercent: 3,
+        bankCommissionPercent: 2
     };
-    const res = calculateParty(inputs);
-    assert.strictEqual(res.valid, true);
-    assert.strictEqual(res.totalCost, 688648);
-    assert.strictEqual(Math.round(res.unitCost * 100) / 100, 6886.48);
-});
 
-test('Customs fees change impact check', () => {
-    const baseInputs = { quantity: 100, price: 10, rate: 480, intShipping: 18000, localShipping: 5000, dutyRate: 10, broker: 15000, docs: 10000, sellingPrice: 8500 };
-    const res1 = calculateParty({ ...baseInputs, customsFees: 20000 });
-    const res2 = calculateParty({ ...baseInputs, customsFees: 0 });
-    assert.strictEqual(res1.totalCost - res2.totalCost, 20000);
-});
+    const res = calculateTender(testInput);
 
-test('All 8 currencies conversion check', () => {
-    const currencies = ['KZT', 'USD', 'CNY', 'KGS', 'UZS', 'RUB', 'TRY', 'AED'];
-    currencies.forEach(curr => {
-        const res = calculateParty({ quantity: 10, price: 100, rate: 5 });
-        assert.strictEqual(res.valid, true);
-        assert.strictEqual(res.purchaseBaseKZT, 5000);
-    });
-});
+    assert(res.offerPrice === 1200000, `Expected offerPrice 1200000, got ${res.offerPrice}`);
+    assert(res.grossProfit === 200000, `Expected grossProfit 200000, got ${res.grossProfit}`);
+    assert(res.taxAmount === 36000, `Expected taxAmount 36000, got ${res.taxAmount}`);
+    assert(res.bidSecurity === 12000, `Expected bidSecurity 12000, got ${res.bidSecurity}`);
+    assert(res.contractSecurity === 36000, `Expected contractSecurity 36000, got ${res.contractSecurity}`);
 
-test('Rate validation (empty, zero, negative, NaN)', () => {
-    assert.strictEqual(calculateParty({ quantity: 10, price: 10, rate: 0 }).valid, false);
-    assert.strictEqual(calculateParty({ quantity: 10, price: 10, rate: -5 }).valid, false);
-    assert.strictEqual(calculateParty({ quantity: 10, price: 10, rate: NaN }).valid, false);
-    assert.strictEqual(calculateParty({ quantity: 10, price: 10, rate: '' }).valid, false);
-});
+    console.log('All Calculator Tests Passed Successfully!');
+}
+
+function assert(condition, message) {
+    if (!condition) {
+        throw new Error(`Test Failed: ${message}`);
+    }
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    runTests();
+}
