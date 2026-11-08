@@ -4,31 +4,66 @@ body {
   padding: 0;
   background-color: #f1f5f9;
   color: #1e293b;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
+  box-sizing: border-box;
 }
 
 .header {
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
-  padding: 20px 0;
-  text-align: center;
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .header h1 {
-  margin: 0 0 5px 0;
-  font-size: 1.8rem;
+  margin: 0;
+  font-size: 1.5rem;
   color: #0f172a;
 }
 
-.header p {
+.nav-menu {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #475569;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.nav-menu a:hover {
+  color: #2563eb;
+}
+
+.header-subtitle-wrap {
+  margin-top: 8px;
+}
+
+.header-subtitle-wrap p {
   margin: 0;
   color: #64748b;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .main-content {
@@ -38,14 +73,26 @@ body {
 .section {
   background: #ffffff;
   border-radius: 12px;
-  padding: 20px;
+  padding: 24px;
   margin-bottom: 30px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
+.section h2 {
+  margin-top: 0;
+  color: #0f172a;
+  font-size: 1.35rem;
+}
+
+.section-desc {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
 .nav-links {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   flex-wrap: wrap;
   margin-top: 15px;
 }
@@ -58,15 +105,102 @@ body {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
+  transition: background 0.2s;
 }
 
 .nav-links a:hover {
   background: #bae6fd;
 }
 
-/* Стили для блока банковских услуг */
+/* Калькулятор */
+.calc-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+@media (max-width: 768px) {
+  .calc-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-form .form-group {
+  margin-bottom: 15px;
+}
+
+.calc-form label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #334155;
+}
+
+.calc-form input, .calc-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  background: #f8fafc;
+}
+
+.calc-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+}
+
+.calc-btn:hover {
+  background: #1d4ed8;
+}
+
+.calc-results {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.calc-results h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.result-item strong {
+  color: #0f172a;
+}
+
+.highlight-profit {
+  color: #16a34a !important;
+  font-size: 1.05rem;
+}
+
+/* Банковские карточки */
 .banks-section {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .section-header {
@@ -101,12 +235,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.bank-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .bank-card-header {
@@ -166,13 +294,75 @@ body {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: background 0.2s;
   background-color: #2563eb;
   color: #ffffff;
+  transition: background 0.2s;
 }
 
 .bank-btn:hover {
   background-color: #1d4ed8;
+}
+
+/* Академия */
+.academy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.academy-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.academy-card h4 {
+  margin: 0 0 8px 0;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.academy-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.academy-links h3 {
+  font-size: 1.05rem;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+/* Финкабинет */
+.cabinet-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border: 1px dashed #93c5fd;
+}
+
+.cabinet-features {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+.feature-badge {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.cabinet-note {
+  font-size: 0.88rem;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 10px;
 }
 
 .footer {
@@ -188,7 +378,7 @@ body {
 .legal-disclaimer {
   max-width: 800px;
   margin: 0 auto 15px auto;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #94a3b8;
   line-height: 1.4;
   padding: 0 15px;
