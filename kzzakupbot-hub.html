@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kzzakupbot Hub</title>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--tx:#12202f;--mut:#5b6b7c;--ac:#0a7c8c;--ac2:#e6f4f6;--bd:#dde4ec;--ok:#0b7a43;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1720;--card:#17212c;--tx:#e8eef4;--mut:#9aabbb;--ac:#3cc3d3;--ac2:#13313a;--bd:#263544;--ok:#5fd18f}}
+:root[data-theme="dark"]{--bg:#0f1720;--card:#17212c;--tx:#e8eef4;--mut:#9aabbb;--ac:#3cc3d3;--ac2:#13313a;--bd:#263544;--ok:#5fd18f}
+*{box-sizing:border-box}html{scroll-padding-top:60px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--card);border-bottom:1px solid var(--bd);display:flex;gap:4px;overflow-x:auto;padding:8px 12px;z-index:5}
+nav a{white-space:nowrap;padding:6px 12px;border-radius:99px;color:var(--mut);text-decoration:none;font-size:14px}
+nav a:hover{background:var(--ac2);color:var(--ac)}
+main{max-width:900px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:16px 0 6px}h2{font-size:21px;margin:0 0 6px}p{margin:0 0 10px}
+.mut{color:var(--mut)}section{margin:28px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+a.link{color:var(--ac);text-decoration:none;font-weight:600}a.link:hover{text-decoration:underline}
+.portal{display:flex;justify-content:space-between;align-items:center;gap:8px}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+input,select{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+button{margin-top:14px;padding:12px 18px;border:0;border-radius:10px;background:var(--ac);color:#fff;font:inherit;font-weight:600;cursor:pointer;width:100%}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}.row b{white-space:nowrap}.hl b{color:var(--ok)}
+.badge{display:inline-block;font-size:12px;background:var(--ac2);color:var(--ac);padding:2px 8px;border-radius:99px;margin-left:6px}
+ul{padding-left:18px;margin:8px 0}.dis{font-size:13px;color:var(--mut);border-top:1px solid var(--bd);margin-top:32px;padding-top:14px}
+.two{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+</style>
+</head>
+<body>
+<nav>
+<a href="#zakupki">Закупки</a><a href="#calc">Калькулятор</a><a href="#banks">Банки и гарантии</a><a href="#academy">Академия</a><a href="#fin">Фин. кабинет</a>
+</nav>
+<main>
+<h1>🇰🇿 Kzzakupbot Hub</h1>
+<p class="mut">Централизованная экосистема для работы с тендерами, закупками и финансовыми инструментами Казахстана.</p>
+
+<section id="zakupki">
+<h2>Поиск лотов и официальные площадки РК</h2>
+<p class="mut">Навигация по официальным государственным и корпоративным порталам закупщиков Казахстана</p>
+<div class="grid">
+<div class="card portal"><span>Госзакупки РК</span><a class="link" href="https://goszakup.gov.kz/" target="_blank" rel="noopener">Открыть →</a></div>
+<div class="card portal"><span>Самрук-Казына</span><a class="link" href="https://zakup.sk.kz/" target="_blank" rel="noopener">Открыть →</a></div>
+<div class="card portal"><span>СК-Фармация</span><a class="link" href="https://skmed.ecc.kz/" target="_blank" rel="noopener">Открыть →</a></div>
+<div class="card portal"><span>Mitwork</span><a class="link" href="https://eep.mitwork.kz/" target="_blank" rel="noopener">Открыть →</a></div>
+<div class="card portal"><span>ФСМС</span><a class="link" href="https://fms.ecc.kz/" target="_blank" rel="noopener">Открыть →</a></div>
+</div>
+</section>
+
+<section id="calc">
+<h2>Тендерный калькулятор</h2>
+<p class="mut">Расчёт себестоимости, маржи, налогов (НДС, СНР, КПН/ИПН), обеспечений и комиссий банков.</p>
+<div class="two">
+<div class="card">
+<label for="cost">Себестоимость товара/услуги, ₸</label><input id="cost" type="number" inputmode="decimal" value="1000000">
+<label for="mk">Желаемая наценка, %</label><input id="mk" type="number" inputmode="decimal" value="25">
+<label for="tax">Налоговый режим</label>
+<select id="tax">
+<option value="snr">СНР (Упрощенка 3%)</option>
+<option value="vat">Общий (с НДС 12%)</option>
+<option value="novat">Без НДС / Общеустановленный</option>
+</select>
+<label for="bid">Обеспечение заявки, %</label><input id="bid" type="number" inputmode="decimal" value="1">
+<label for="ctr">Обеспечение исполнения договора, %</label><input id="ctr" type="number" inputmode="decimal" value="3">
+<label for="fee">Комиссия банка за гарантию, %</label><input id="fee" type="number" inputmode="decimal" value="2">
+<button id="go" type="button">Рассчитать сделку</button>
+</div>
+<div class="card" id="res" aria-live="polite"></div>
+</div>
+<p class="mut" style="margin-top:8px;font-size:13px">Расчёт ориентировочный: ставки налогов упрощены, перед подачей заявки сверьтесь с актуальным Налоговым кодексом РК. Комиссия считается от суммы обеспечения.</p>
+</section>
+
+<section id="banks">
+<h2>Банки и гарантии</h2>
+<p class="mut">Оформление бланковых гарантий, открытие спецсчетов и расчетно-кассовое обслуживание</p>
+<div class="grid">
+<div class="card"><b>🟡 Kaspi Business</b><span class="badge">Онлайн 5 мин</span>
+<p class="mut">Экспресс-выпуск бланковых и обеспеченных гарантий в приложении Kaspi Pay.</p>
+<ul><li>Лимит: до 50 млн ₸ (ИП) / до 100 млн ₸ (ТОО)</li><li>Комиссия: от 1,5% до 3% (мин. 10 000 ₸)</li><li>Совместимость: Госзакупки РК, Самрук-Казына</li></ul>
+<a class="link" href="https://kaspi.kz/business" target="_blank" rel="noopener">Ссылка →</a></div>
+<div class="card"><b>🟢 Halyk Bank (Бизнес)</b><span class="badge">Крупные лимиты</span>
+<p class="mut">Цифровые тендерные гарантии Tender Pro в системе Halyk Onlinebank.</p>
+<ul><li>Бланковые гарантии: до 200 млн ₸ (до 100 млн ₸/лот)</li><li>Комиссия: 1–2% с НДС по пакетам Tender / Tender Pro</li><li>Дополнительно: валютные контракты, тендерные спецсчета 24/7</li></ul>
+<a class="link" href="https://halykbank.kz/" target="_blank" rel="noopener">Ссылка →</a></div>
+<div class="card"><b>🔵 Банк ЦентрКредит (БЦК)</b><span class="badge">Без залога</span>
+<p class="mut">Беззалоговые лимиты под обороты сторонних банков через BCC Business.</p>
+<ul><li>Лимит: беззалоговые гарантии до 350 млн ₸</li><li>Комиссия: от 1,7% (спецусловия при тендерной опции)</li><li>Скорость: решение и одобрение за 10 минут</li></ul>
+<a class="link" href="https://bcc.kz/" target="_blank" rel="noopener">Ссылка →</a></div>
+</div>
+</section>
+
+<section id="academy">
+<h2>Бесплатная академия поставщика</h2>
+<p class="mut">Информационные материалы и проверенные образовательные ресурсы для участников закупок</p>
+<div class="grid">
+<div class="card"><b>1. Основы государственных закупок</b><p class="mut">Базовые принципы законодательства, правила участия и терминология.</p></div>
+<div class="card"><b>2. Участие в закупках Самрук-Казына</b><p class="mut">Правила холдинга и предварительный квалификационный отбор (ПКО).</p></div>
+<div class="card"><b>3. Подготовка и подача заявок</b><p class="mut">Защита от отклонений по формальным признакам и типичные ошибки.</p></div>
+<div class="card"><b>4. Банковские гарантии</b><p class="mut">Порядок оформления обеспечений и предотвращение кассовых разрывов.</p></div>
+<div class="card"><b>5. Налоги и финансовая грамотность поставщика</b><p class="mut">Особенности налогообложения поставщиков (НДС, СНР, КПН/ИПН).</p></div>
+<div class="card"><b>6. Исполнение договора, логистика и управление контрактом</b><p class="mut">Акты выполненных работ и логистические риски.</p></div>
+</div>
+<p style="margin-top:12px"><b>Внешние ресурсы:</b> <a class="link" href="https://skills.enbek.kz/" target="_blank" rel="noopener">Skills Enbek</a> · <a class="link" href="https://atameken.kz/" target="_blank" rel="noopener">НПП РК «Атамекен»</a> · <a class="link" href="https://sk.kz/" target="_blank" rel="noopener">Самрук-Казына</a></p>
+</section>
+
+<section id="fin">
+<h2>Фин. кабинет поставщика <span class="badge">В разработке</span></h2>
+<div class="card">
+<p>Модуль комплексного аналитического планирования тендерных сделок. Функционал находится на этапе проектирования:</p>
+<ul><li>Планирование оборотного капитала</li><li>Расчёт кассового разрыва</li><li>Оценка стоимости финансирования</li><li>Финансовое планирование тендерной сделки</li></ul>
+<p class="mut">Персональные кабинеты, авторизация и сохранение расчётов в будущих версиях не задействованы.</p>
+</div>
+</section>
+
+<p class="dis">Правовой дисклеймер: Kzzakupbot Hub является независимым информационно-аналитическим сервисом. Платформа не является государственным органом, финансовым учреждением или банком, не проводит государственные закупки и не гарантирует победу в тендерах или одобрение банковских гарантий.<br>© 2026 Kzzakupbot Hub. Все права защищены.</p>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var f=function(n){return Math.round(n).toLocaleString('ru-RU').replace(/\u00a0/g,' ')+' ₸'};
+function calc(){
+var cost=+$('cost').value||0,mk=+$('mk').value||0,bid=+$('bid').value||0,ctr=+$('ctr').value||0,fee=+$('fee').value||0,t=$('tax').value;
+var price=cost*(1+mk/100),gross=price-cost,tax,label;
+if(t==='snr'){tax=price*0.03;label='Сумма налога (СНР 3%)'}
+else if(t==='vat'){var vat=gross*0.12;tax=vat+(gross-vat)*0.20;label='Налоги (НДС 12% с наценки + КПН 20%)'}
+else{tax=gross*0.20;label='Налог (КПН 20% с прибыли)'}
+var gb=price*bid/100,gc=price*ctr/100,comm=(gb+gc)*fee/100,net=gross-tax-comm,margin=price?net/price*100:0;
+var rows=[['Цена предложения',f(price)],[label,f(tax)],['Валовая прибыль',f(gross)],['Чистая прибыль после налогов и комиссий',f(net),1],['Итоговая маржа',margin.toFixed(2)+'%',1],['Обеспечение заявки',f(gb)],['Обеспечение договора',f(gc)],['Комиссия банка за гарантии',f(comm)]];
+$('res').innerHTML='<b>Результаты расчёта</b>'+rows.map(function(r){return '<div class="row'+(r[2]?' hl':'')+'"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'}).join('');
+}
+$('go').addEventListener('click',calc);calc();
+})();
+</script>
+</body>
+</html>
